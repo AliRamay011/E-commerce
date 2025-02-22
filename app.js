@@ -196,7 +196,7 @@ function logout() {
   // Ya specific cookie ko delete kar sakte ho:
 
   // User ko home.html ya login page pe redirect karna
-  window.location.href = "home.html"; // Yahan login.html ya aapke login page ka URL ho
+  window.location.href = "index.html"; // Yahan login.html ya aapke login page ka URL ho
 }
 //  yeh check kr rha he ky men html ky page pr reh kr yeh kaam kr rha hun yah nhi
 var currentPage = window.location.pathname;
