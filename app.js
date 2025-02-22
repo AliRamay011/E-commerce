@@ -201,7 +201,7 @@ function logout() {
 //  yeh check kr rha he ky men html ky page pr reh kr yeh kaam kr rha hun yah nhi
 var currentPage = window.location.pathname;
 
-if (currentPage.includes("home.html")) {
+if (currentPage.includes("index.html")) {
   document.querySelectorAll(".cart").forEach((cart) => {
     cart.addEventListener("click", (event) => {
       if (event.target.classList.contains("cart-design")) {
