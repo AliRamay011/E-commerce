@@ -295,13 +295,10 @@ function logout() {
   localStorage.removeItem("isLoggedIn");
   localStorage.removeItem("loggedInUser");
 
-<<<<<<< HEAD
+
   // User ko home.html ya login page pe redirect karna
   window.location.href = "index.html"; // Yahan login.html ya aapke login page ka URL ho
-=======
-  // Redirect to home page
-  window.location.href = "index.html";
->>>>>>> 3f1df0d (first commit)
+
 }
 //  yeh check kr rha he ky men html ky page pr reh kr yeh kaam kr rha hun yah nhi
 var currentPage = window.location.pathname;
