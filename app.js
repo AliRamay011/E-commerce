@@ -78,12 +78,14 @@ function Sinup() {
 }
 
 // // Login Function
+
+
 function log() {
   var lemail = document.getElementById("Email").value;
   var lapass = document.getElementById("Password").value;
   var role = document.getElementById("role").value;
   var ShowData = document.getElementById("AdminData");
-  // var UserData = document.getElementById("UserInfo");
+  var UserData = document.getElementById("UserInfo");
 
   console.log("ShowData Element:", ShowData); // Debugging
 
@@ -115,7 +117,7 @@ function log() {
     `;
 
     document.getElementById("login").style.display = "none"; // Hide login popup
-    window.location.href = "dashboard.html";
+    window.location.href = "dashboard.html"; // Redirect admin to dashboard
   }
   // User Login
   else if (role === "user") {
@@ -133,11 +135,17 @@ function log() {
       // Store user data in localStorage
       localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-    
+      // Display user data
+      UserData.innerHTML = `
+        <ul>
+          <li>Name: ${user.userName}</li>
+          <li>Email: ${user.email}</li>
+          <li>Password: ${user.password}</li>
+        </ul>
+      `;
 
-      document.getElementById("login").style.display = "none"; 
-      alert("user not exit dashboard")// Hide login popup
-      // window.location.href = "dashboard.html"; // Redirect to dashboard after login
+      document.getElementById("login").style.display = "none"; // Hide login popup
+      // window.location.href = "index.html"; // Redirect user to home page (NOT dashboard)
     } else {
       alert("Invalid Email or Password!");
     }
@@ -145,83 +153,6 @@ function log() {
     alert("Invalid Role or Credentials!");
   }
 }
-
-// function log() {
-//   var lemail = document.getElementById("Email").value;
-//   var lapass = document.getElementById("Password").value;
-//   var role = document.getElementById("role").value;
-//   var ShowData = document.getElementById("AdminData");
-//   var UserData = document.getElementById("UserInfo");
-
-//   console.log("ShowData Element:", ShowData); // Debugging
-
-//   // Admin Login
-//   if (
-//     role === "admin" &&
-//     lemail === "admin@gmail.com" &&
-//     lapass === "admin123"
-//   ) {
-//     alert("Admin Login Successful!");
-//     localStorage.setItem("isLoggedIn", "true");
-
-//     // Store admin data in localStorage
-//     var adminData = {
-//       userName: "Admin",
-//       email: lemail,
-//       password: lapass,
-//       role: "admin",
-//     };
-//     localStorage.setItem("loggedInUser", JSON.stringify(adminData));
-
-//     // Display admin data
-//     ShowData.innerHTML = `
-//       <ul>
-//         <li>Name: Admin</li>
-//         <li>Email: ${lemail}</li>
-//         <li>Password: ${lapass}</li>
-//       </ul>
-//     `;
-
-//     document.getElementById("login").style.display = "none"; // Hide login popup
-//     window.location.href = "dashboard.html"; // Redirect admin to dashboard
-//   }
-//   // User Login
-//   else if (role === "user") {
-//     var userData = JSON.parse(localStorage.getItem("TotalData")) || [];
-//     var user = userData.find(
-//       (u) => u.email === lemail && u.password === lapass
-//     );
-
-//     console.log("User Object:", user); // Debugging
-
-//     if (user) {
-//       alert("User Login Successful!");
-//       localStorage.setItem("isLoggedIn", "true");
-
-//       // Store user data in localStorage
-//       localStorage.setItem("loggedInUser", JSON.stringify(user));
-
-//       // Display user data
-//       UserData.innerHTML = `
-//         <ul>
-//           <li>Name: ${user.userName}</li>
-//           <li>Email: ${user.email}</li>
-//           <li>Password: ${user.password}</li>
-//         </ul>
-//       `;
-
-//       document.getElementById("login").style.display = "none"; // Hide login popup
-//       // window.location.href = "index.html"; // Redirect user to home page (NOT dashboard)
-//     } else {
-//       alert("Invalid Email or Password!");
-//     }
-//   } else {
-//     alert("Invalid Role or Credentials!");
-//   }
-// }
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
   var loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
   var userDataElement = document.getElementById("AdminData");
@@ -260,31 +191,6 @@ function MyAccount() {
        alert("User cannot access the dashboard!")
   }
 }
-
-
-// function MyAccount() {
-//   // Check if the user is logged in by checking sessionStorage or localStorage
-//   if (!localStorage.getItem("isLoggedIn")) {
-//     // Agar user logged in nahi hai, to login/signup page pe redirect karo
-//     document.getElementById("sinup").style.display = "block";
-//   } else {
-//     // Get logged-in user data
-//     var loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-
-//     // Check if the logged-in user is admin or user
-//     if (loggedInUser.role === "admin") {
-//       alert("Welcome Dashboard");
-//       window.location.href = "dashboard.html"; // Redirect admin to dashboard
-//     } else if (loggedInUser.role === "user") {
-//       alert("User cannot access the dashboard!"); // Show alert for user
-//       // window.location.href = "index.html"; // Redirect user to home page
-//     }
-//   }
-// }
-
-
-
-
 
 // Close Modal Function
 function closeModal(modalId) {
@@ -460,59 +366,14 @@ function deleteProduct() {
   // Remove Data from innerHtml
   showProducts.innerHTML = "";
 }
-// document.addEventListener("DOMContentLoaded", function () {
-//   var UserInfo = document.getElementById("UserInfo");
-//   var userData = JSON.parse(localStorage.getItem("TotalData")) || [];
-//   var user = userData.find(
-//     (u) =>
-//       u.email === "admin@gmail.com" &&
-//       u.password === "admin123" &&
-//       u.role === "admin"
-//   );
 
-//   console.log("User Object:", user); // Debugging
-//   if (user) {
-//     console.log(user);
-//     UserInfo.innerHTML = `
-//              <div class="flex-user">
-//               <li class="userinfo">John Doe</li>
-//               <li class="userinfo">JohnDoe@gmail.com</li>
-//                <button class="delete-btn" onclick='editUser()' >  <img class="delete" src="images/edit.png" alt=""></button>
-//                <button class="delete-btn" onclick='deleteUser()'>  <img class="delete" src="images/delete.png" alt="" ></button>
-
-//               </div>
-//            `;
-//   } else {
-//     console.log("Admin Login and see User data");
-//   }
-// });
 function deleteUser() {
   localStorage.removeItem("cart"); // Remove cart data
   localStorage.removeItem("checkoutData"); // Remove checkout data
   // Remove Data from innerHtml
   UserInfo.innerHTML = "";
 }
-// function editUser() {
-//   var userData = JSON.parse(localStorage.getItem("TotalData")) || [];
-//   var user = userData.find(
-//     (u) =>
-//       u.email === "admin@gmail.com" &&
-//       u.password === "admin123" &&
-//       u.role === "admin"
-//   );
 
-//   console.log("User Object:", user); // Debugging
-//   UserInfo.innerHTML =`
-//   <div class="flex-user">
-//   <li class="userinfo" contenteditabel='true'>John Doe</li>
-//   <li class="userinfo" contenteditabel='true'>JohnDoe@gmail.com</li>
-//    <button class="delete-btn" onclick='editUser()' >  <img class="delete" src="images/edit.png" alt=""></button>
-//    <button class="delete-btn" onclick='deleteUser()'>  <img class="delete" src="images/delete.png" alt="" ></button>
-
-//   </div>
-//   `
-
-// }
 document.addEventListener("DOMContentLoaded", function () {
   var UserInfo = document.getElementById("UserInfo");
   var userData = JSON.parse(localStorage.getItem("TotalData")) || [];
@@ -550,27 +411,7 @@ function editUser() {
   </div>
   `;
 }
-// function editproduct() {
-//   var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {
-//     products: [],
-//   };
-//   var cartProduct = document.getElementById("cart-product");
-//   cartProduct.innerHTML = checkoutData.products
-//   .map(
-//     (product) => `
-//       <div class="product-item">
-//         <p contenteditable='true'> ${product.id}</p>
-//         <p contenteditable='true'>${product.name}</p>
-//         <p contenteditable='true'>${product.price}</p>
-//         <p contenteditable='true'>${product.quantity}</p>
-//         <button class="delete-btn" onclick='saveUser()'><img class="save" src="images/check.png" alt=""></button>
-//     <button class="delete-btn" onclick='cancelEdit()'><img class="cancel" src="images/close.png" alt=""></button>
-//       </div>
-  
-//     `
-//   )
-//   .join()
-// }
+
 
 function editproduct() {
   var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || { products: [] };
@@ -639,39 +480,7 @@ function saveUser() {
   `;
 }
 
-// function saveProduct() {
-//   var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || { products: [] };
-//   var cartProduct = document.getElementById("showProducts");
 
-//   // Ensure element exists
-//   if (!cartProduct) {
-//     console.error("Element with ID 'cart-product' not found!");
-//     return;
-//   }
-
-//   // Ensure there are products in checkoutData
-//   if (checkoutData.products.length === 0) {
-//     console.log("No products found in checkoutData.");
-//     return;
-//   }
-
-//   cartProduct.innerHTML = checkoutData.products
-//     .map(
-//       (product, index) => `
-//       <div class="product-item" data-index="${index}">
-//         <p class="id" contenteditable='true'>${product.id}</p>
-//         <p class="name" contenteditable='true'>${product.name}</p>
-//         <p class="price" contenteditable='true'>${product.price}</p>
-//         <p class ="quantity"contenteditable='true'>${product.quantity}</p>
-//         <div class="product-div1">
-//         <button class="delete-btn" onclick='editUser()'><img class="delete" src="images/edit.png" alt=""></button>
-//     <button class="delete-btn" onclick='deleteUser()'><img class="delete" src="images/delete.png" alt=""></button>
-//         </div>
-//       </div>
-//     `
-//     )
-//     .join(""); // Fix: Removed unwanted commas
-// }
 
 
 function saveProduct() {
