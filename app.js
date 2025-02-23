@@ -83,7 +83,7 @@ function log() {
   var lapass = document.getElementById("Password").value;
   var role = document.getElementById("role").value;
   var ShowData = document.getElementById("AdminData");
-  var UserData = document.getElementById("UserInfo");
+  // var UserData = document.getElementById("UserInfo");
 
   console.log("ShowData Element:", ShowData); // Debugging
 
@@ -115,7 +115,7 @@ function log() {
     `;
 
     document.getElementById("login").style.display = "none"; // Hide login popup
-    // window.location.href = "dashboard.html"; // Redirect to dashboard after login
+    window.location.href = "dashboard.html";
   }
   // User Login
   else if (role === "user") {
@@ -133,16 +133,10 @@ function log() {
       // Store user data in localStorage
       localStorage.setItem("loggedInUser", JSON.stringify(user));
 
-      // Display user data
-      ShowData.innerHTML = `
-        <ul>
-          <li>Name: ${user.userName}</li>
-          <li>Email: ${user.email}</li>
-          <li>Password: ${user.password}</li>
-        </ul>
-      `;
+    
 
-      document.getElementById("login").style.display = "none"; // Hide login popup
+      document.getElementById("login").style.display = "none"; 
+      alert("user not exit dashboard")// Hide login popup
       // window.location.href = "dashboard.html"; // Redirect to dashboard after login
     } else {
       alert("Invalid Email or Password!");
@@ -151,6 +145,82 @@ function log() {
     alert("Invalid Role or Credentials!");
   }
 }
+
+// function log() {
+//   var lemail = document.getElementById("Email").value;
+//   var lapass = document.getElementById("Password").value;
+//   var role = document.getElementById("role").value;
+//   var ShowData = document.getElementById("AdminData");
+//   var UserData = document.getElementById("UserInfo");
+
+//   console.log("ShowData Element:", ShowData); // Debugging
+
+//   // Admin Login
+//   if (
+//     role === "admin" &&
+//     lemail === "admin@gmail.com" &&
+//     lapass === "admin123"
+//   ) {
+//     alert("Admin Login Successful!");
+//     localStorage.setItem("isLoggedIn", "true");
+
+//     // Store admin data in localStorage
+//     var adminData = {
+//       userName: "Admin",
+//       email: lemail,
+//       password: lapass,
+//       role: "admin",
+//     };
+//     localStorage.setItem("loggedInUser", JSON.stringify(adminData));
+
+//     // Display admin data
+//     ShowData.innerHTML = `
+//       <ul>
+//         <li>Name: Admin</li>
+//         <li>Email: ${lemail}</li>
+//         <li>Password: ${lapass}</li>
+//       </ul>
+//     `;
+
+//     document.getElementById("login").style.display = "none"; // Hide login popup
+//     window.location.href = "dashboard.html"; // Redirect admin to dashboard
+//   }
+//   // User Login
+//   else if (role === "user") {
+//     var userData = JSON.parse(localStorage.getItem("TotalData")) || [];
+//     var user = userData.find(
+//       (u) => u.email === lemail && u.password === lapass
+//     );
+
+//     console.log("User Object:", user); // Debugging
+
+//     if (user) {
+//       alert("User Login Successful!");
+//       localStorage.setItem("isLoggedIn", "true");
+
+//       // Store user data in localStorage
+//       localStorage.setItem("loggedInUser", JSON.stringify(user));
+
+//       // Display user data
+//       UserData.innerHTML = `
+//         <ul>
+//           <li>Name: ${user.userName}</li>
+//           <li>Email: ${user.email}</li>
+//           <li>Password: ${user.password}</li>
+//         </ul>
+//       `;
+
+//       document.getElementById("login").style.display = "none"; // Hide login popup
+//       // window.location.href = "index.html"; // Redirect user to home page (NOT dashboard)
+//     } else {
+//       alert("Invalid Email or Password!");
+//     }
+//   } else {
+//     alert("Invalid Role or Credentials!");
+//   }
+// }
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
   var loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
@@ -179,24 +249,59 @@ function MyAccount() {
     // Agar user logged in nahi hai, to login/signup page pe redirect karo
     document.getElementById("sinup").style.display = "block";
   } else {
-    // Agar user logged in hai, to dashboard pe redirect karo
-    window.location.href = "dashboard.html";
-    console.log("Welcome Dashboard");
+       var LogedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+  }
+
+  if( LogedInUser.role === "admin"){
+   alert("Welcome Dashboard")
+   window.location.href = 'dashboard.html'
+  }
+  else if(LogedInUser.role === "user"){
+       alert("User cannot access the dashboard!")
   }
 }
+
+
+// function MyAccount() {
+//   // Check if the user is logged in by checking sessionStorage or localStorage
+//   if (!localStorage.getItem("isLoggedIn")) {
+//     // Agar user logged in nahi hai, to login/signup page pe redirect karo
+//     document.getElementById("sinup").style.display = "block";
+//   } else {
+//     // Get logged-in user data
+//     var loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+//     // Check if the logged-in user is admin or user
+//     if (loggedInUser.role === "admin") {
+//       alert("Welcome Dashboard");
+//       window.location.href = "dashboard.html"; // Redirect admin to dashboard
+//     } else if (loggedInUser.role === "user") {
+//       alert("User cannot access the dashboard!"); // Show alert for user
+//       // window.location.href = "index.html"; // Redirect user to home page
+//     }
+//   }
+// }
+
+
+
+
 
 // Close Modal Function
 function closeModal(modalId) {
   document.getElementById(modalId).style.display = "none";
 }
 function logout() {
-  // Session ya cookies ko clear karna
-  sessionStorage.clear(); // Agar aap sessionStorage use kar rahe ho
-  localStorage.clear(); // Agar aap localStorage use kar rahe ho
-  // Ya specific cookie ko delete kar sakte ho:
+  // Clear user session
+  localStorage.removeItem("isLoggedIn");
+  localStorage.removeItem("loggedInUser");
 
+<<<<<<< HEAD
   // User ko home.html ya login page pe redirect karna
   window.location.href = "index.html"; // Yahan login.html ya aapke login page ka URL ho
+=======
+  // Redirect to home page
+  window.location.href = "index.html";
+>>>>>>> 3f1df0d (first commit)
 }
 //  yeh check kr rha he ky men html ky page pr reh kr yeh kaam kr rha hun yah nhi
 var currentPage = window.location.pathname;
@@ -330,12 +435,12 @@ document.addEventListener("DOMContentLoaded", function () {
         .map(
           (product) => `
             <div class="product-item">
-              <p> ${product.id}</p>
-              <p>${product.name}</p>
-              <p>${product.price}</p>
-              <p>${product.quantity}</p>
-              <div className="parent-div">
-              <button class="delete-btn" >  <img class="delete" src="images/edit.png" alt=""></button>
+              <p class="id"> ${product.id}</p>
+              <p class="name">${product.name}</p>
+              <p class="price">${product.price}</p>
+              <p class="quantity">${product.quantity}</p>
+              <div class="parent-div">
+              <button class="delete-btn" onclick="editproduct()" >  <img class="delete" src="images/edit.png" alt=""></button>
               <button class="delete-btn" onclick='deleteProduct()'>  <img class="delete" src="images/delete.png" alt="" ></button>
               </div>
             </div>
@@ -448,6 +553,62 @@ function editUser() {
   </div>
   `;
 }
+// function editproduct() {
+//   var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || {
+//     products: [],
+//   };
+//   var cartProduct = document.getElementById("cart-product");
+//   cartProduct.innerHTML = checkoutData.products
+//   .map(
+//     (product) => `
+//       <div class="product-item">
+//         <p contenteditable='true'> ${product.id}</p>
+//         <p contenteditable='true'>${product.name}</p>
+//         <p contenteditable='true'>${product.price}</p>
+//         <p contenteditable='true'>${product.quantity}</p>
+//         <button class="delete-btn" onclick='saveUser()'><img class="save" src="images/check.png" alt=""></button>
+//     <button class="delete-btn" onclick='cancelEdit()'><img class="cancel" src="images/close.png" alt=""></button>
+//       </div>
+  
+//     `
+//   )
+//   .join()
+// }
+
+function editproduct() {
+  var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || { products: [] };
+  var cartProduct = document.getElementById("showProducts");
+
+  // Ensure element exists
+  if (!cartProduct) {
+    console.error("Element with ID 'cart-product' not found!");
+    return;
+  }
+
+  // Ensure there are products in checkoutData
+  if (checkoutData.products.length === 0) {
+    console.log("No products found in checkoutData.");
+    return;
+  }
+
+  cartProduct.innerHTML = checkoutData.products
+    .map(
+      (product, index) => `
+      <div class="product-item" data-index="${index}">
+        <p class="id" contenteditable='true'>${product.id}</p>
+        <p class="name" contenteditable='true'>${product.name}</p>
+        <p class="price" contenteditable='true'>${product.price}</p>
+        <p class ="quantity"contenteditable='true'>${product.quantity}</p>
+        <div class="product-div1">
+        <button class="delete-btn" onclick='saveProduct(${index})'><img class="save" src="images/check.png" alt=""></button>
+        <button class="delete-btn" onclick='cancelEdit(${index})'><img class="cancel" src="images/close.png" alt=""></button>
+        </div>
+      </div>
+    `
+    )
+    .join(""); // Fix: Removed unwanted commas
+}
+
 
 function saveUser() {
   var UserInfo = document.getElementById("UserInfo");
@@ -480,6 +641,173 @@ function saveUser() {
   </div>
   `;
 }
+
+// function saveProduct() {
+//   var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || { products: [] };
+//   var cartProduct = document.getElementById("showProducts");
+
+//   // Ensure element exists
+//   if (!cartProduct) {
+//     console.error("Element with ID 'cart-product' not found!");
+//     return;
+//   }
+
+//   // Ensure there are products in checkoutData
+//   if (checkoutData.products.length === 0) {
+//     console.log("No products found in checkoutData.");
+//     return;
+//   }
+
+//   cartProduct.innerHTML = checkoutData.products
+//     .map(
+//       (product, index) => `
+//       <div class="product-item" data-index="${index}">
+//         <p class="id" contenteditable='true'>${product.id}</p>
+//         <p class="name" contenteditable='true'>${product.name}</p>
+//         <p class="price" contenteditable='true'>${product.price}</p>
+//         <p class ="quantity"contenteditable='true'>${product.quantity}</p>
+//         <div class="product-div1">
+//         <button class="delete-btn" onclick='editUser()'><img class="delete" src="images/edit.png" alt=""></button>
+//     <button class="delete-btn" onclick='deleteUser()'><img class="delete" src="images/delete.png" alt=""></button>
+//         </div>
+//       </div>
+//     `
+//     )
+//     .join(""); // Fix: Removed unwanted commas
+// }
+
+
+function saveProduct() {
+  var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || { products: [] };
+  var cartProduct = document.getElementById("showProducts");
+
+  // Ensure element exists
+  if (!cartProduct) {
+    console.error("Element with ID 'showProducts' not found!");
+    return;
+  }
+
+  // Ensure there are products in checkoutData
+  if (checkoutData.products.length === 0) {
+    console.log("No products found in checkoutData.");
+    return;
+  }
+
+  cartProduct.innerHTML = checkoutData.products
+    .map(
+      (product, index) => `
+      <div class="product-item" data-index="${index}">
+        <p class="id">${product.id}</p>
+        <p class="name">${product.name}</p>
+        <p class="price">${product.price}</p>
+        <p class="quantity">${product.quantity}</p>
+        <div class="product-div1">
+          <button class="edit-btn" onclick='editProduct(${index})'>
+            <img class="edit" src="images/edit.png" alt="Edit">
+          </button>
+          <button class="delete-btn" onclick='deleteProduct(${index})'>
+            <img class="delete" src="images/delete.png" alt="Delete">
+          </button>
+        </div>
+      </div>
+    `
+    )
+    .join(""); 
+}
+
+// ✅ **Function to Enable Editing (Show Tick & Cancel Buttons)**
+function editProduct(index) {
+  var productDiv = document.querySelector(`.product-item[data-index="${index}"]`);
+
+  // Get current values (Backup for Cancel)
+  var originalName = productDiv.querySelector(".name").innerText;
+  var originalPrice = productDiv.querySelector(".price").innerText;
+  var originalQuantity = productDiv.querySelector(".quantity").innerText;
+
+  // Make fields editable
+  productDiv.querySelector(".name").contentEditable = "true";
+  productDiv.querySelector(".price").contentEditable = "true";
+  productDiv.querySelector(".quantity").contentEditable = "true";
+
+  // Change Edit & Delete buttons to Save & Cancel
+  productDiv.querySelector(".product-div1").innerHTML = `
+    <button class="save-btn" onclick='saveEditedProduct(${index})'>
+      <img class="save" src="images/check.png" alt="Save">
+    </button>
+    <button class="cancel-btn" onclick='cancelEdit(${index}, "${originalName}", "${originalPrice}", "${originalQuantity}")'>
+      <img class="cancel" src="images/close.png" alt="Cancel">
+    </button>
+  `;
+}
+
+// ✅ **Function to Save Edited Product & Restore Buttons**
+function saveEditedProduct(index) {
+  var checkoutData = JSON.parse(localStorage.getItem("checkoutData")) || { products: [] };
+  var productDiv = document.querySelector(`.product-item[data-index="${index}"]`);
+
+  // Get updated values
+  var updatedName = productDiv.querySelector(".name").innerText;
+  var updatedPrice = productDiv.querySelector(".price").innerText;
+  var updatedQuantity = productDiv.querySelector(".quantity").innerText;
+
+  // Update localStorage data
+  checkoutData.products[index].name = updatedName;
+  checkoutData.products[index].price = updatedPrice;
+  checkoutData.products[index].quantity = updatedQuantity;
+  localStorage.setItem("checkoutData", JSON.stringify(checkoutData));
+
+  alert("Product updated successfully!");
+
+  // Make fields uneditable again
+  productDiv.querySelector(".name").contentEditable = "false";
+  productDiv.querySelector(".price").contentEditable = "false";
+  productDiv.querySelector(".quantity").contentEditable = "false";
+
+  // Restore Edit & Delete Buttons
+  productDiv.querySelector(".product-div1").innerHTML = `
+    <button class="edit-btn" onclick='editProduct(${index})'>
+      <img class="edit" src="images/edit.png" alt="Edit">
+    </button>
+    <button class="delete-btn" onclick='deleteProduct(${index})'>
+      <img class="delete" src="images/delete.png" alt="Delete">
+    </button>
+  `;
+}
+
+// ✅ **Function to Cancel Editing & Restore Old Data**
+function cancelEdit(index, originalName, originalPrice, originalQuantity) {
+  var productDiv = document.querySelector(`.product-item[data-index="${index}"]`);
+
+  // Restore old data
+  productDiv.querySelector(".name").innerText = originalName;
+  productDiv.querySelector(".price").innerText = originalPrice;
+  productDiv.querySelector(".quantity").innerText = originalQuantity;
+
+  // Make fields uneditable again
+  productDiv.querySelector(".name").contentEditable = "false";
+  productDiv.querySelector(".price").contentEditable = "false";
+  productDiv.querySelector(".quantity").contentEditable = "false";
+
+  // Restore Edit & Delete Buttons
+  productDiv.querySelector(".product-div1").innerHTML = `
+    <button class="edit-btn" onclick='editProduct(${index})'>
+      <img class="edit" src="images/edit.png" alt="Edit">
+    </button>
+    <button class="delete-btn" onclick='deleteProduct(${index})'>
+      <img class="delete" src="images/delete.png" alt="Delete">
+    </button>
+  `;
+}
+
+// ✅ **Function to Delete Product**
+function deleteProduct() {
+  localStorage.removeItem("cart"); // Remove cart data
+  localStorage.removeItem("checkoutData"); // Remove checkout data
+  // Remove Data from innerHtml
+  var cartProduct = document.getElementById("showProducts");
+  cartProduct.innerHTML = "";
+}
+
 
 function cancelEdit() {
   var UserInfo = document.getElementById("UserInfo");
